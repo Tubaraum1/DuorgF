@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // @mui material components
@@ -29,7 +14,6 @@ function PlatformSettings() {
   const [mentionsMe, setMentionsMe] = useState(true);
   const [newLaunches, setNewLaunches] = useState(false);
   const [productUpdate, setProductUpdate] = useState(true);
-  const [newsletter, setNewsletter] = useState(false);
 
   return (
     <Card sx={{ boxShadow: "none" }}>
@@ -48,7 +32,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Me envie um email quando alguém enviar-me uma mensagem
+              Me envie um e-mail quando encontrar um doador
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -58,7 +42,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Me envie um email quando alguém comentar em meu post
+              Me envie um e-mail quando encontrar um receptor
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -68,42 +52,20 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Me envie um email quando alguém me mencionar
+              Me envie um e-mail quando houver demanda hospitalar
             </MDTypography>
           </MDBox>
         </MDBox>
-        <MDBox mt={3}>
-          <MDTypography variant="caption" fontWeight="bold" color="text" textTransform="uppercase">
-            aplicação
-          </MDTypography>
-        </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch checked={newLaunches} onChange={() => setNewLaunches(!newLaunches)} />
-          </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Novos lançamentos de conta
-            </MDTypography>
-          </MDBox>
-        </MDBox>
+
+        {/* Removi a parte de "aplicação" e a opção de "newsletter" como solicitado */}
+
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
           <MDBox mt={0.5}>
             <Switch checked={productUpdate} onChange={() => setProductUpdate(!productUpdate)} />
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Updates de casos de doação
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
-          <MDBox mt={0.5}>
-            <Switch checked={newsletter} onChange={() => setNewsletter(!newsletter)} />
-          </MDBox>
-          <MDBox width="80%" ml={0.5}>
-            <MDTypography variant="button" fontWeight="regular" color="text">
-              Se inscrever na newsletter
+              Updates de casos de Doação
             </MDTypography>
           </MDBox>
         </MDBox>

@@ -1,9 +1,14 @@
+import { useState } from "react";
+
 // react-router-dom components
 import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -18,6 +23,12 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 import bgImage from "assets/images/sing-up.jpg";
 
 function Cover() {
+  const [userType, setUserType] = useState("doador"); // Estado para o tipo de usuário
+
+  const handleUserTypeChange = (event) => {
+    setUserType(event.target.value);
+  };
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -49,6 +60,16 @@ function Cover() {
             </MDBox>
             <MDBox mb={2}>
               <MDInput type="password" label="Senha" variant="standard" fullWidth />
+            </MDBox>
+            <MDBox mb={2}>
+              {/* Adicionando a opção para o tipo de usuário (Doador ou Receptor) */}
+              <MDTypography variant="body2" color="text" mb={1}>
+                Você é um:
+              </MDTypography>
+              <RadioGroup value={userType} onChange={handleUserTypeChange} row>
+                <FormControlLabel value="doador" control={<Radio />} label="Doador" />
+                <FormControlLabel value="receptor" control={<Radio />} label="Receptor" />
+              </RadioGroup>
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />

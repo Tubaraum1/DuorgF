@@ -36,11 +36,11 @@ function Overview() {
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
               <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
               <ProfileInfoCard
-                title="profile information"
+                title="Informações de Perfil"
                 description="Olá, meu nome é João Pedro. Sou coordenador do Vital Link em Anápolis."
                 info={{
                   fullName: "João Pedro Silva",
-                  mobile: "55 62 9910188",
+                  mobile: "+55 (62) 98765-4321",
                   email: "jotepesilva@gmail.com",
                   location: "BR",
                 }}
@@ -61,7 +61,7 @@ function Overview() {
                     color: "instagram",
                   },
                 ]}
-                action={{ route: "", tooltip: "Edit Profile" }}
+                action={{ route: "", tooltip: "Editar Perfil" }}
                 shadow={false}
               />
               <Divider orientation="vertical" sx={{ mx: 0 }} />
