@@ -9,6 +9,11 @@ import Checkbox from "@mui/material/Checkbox";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -24,9 +29,23 @@ import bgImage from "assets/images/sing-up.jpg";
 
 function Cover() {
   const [userType, setUserType] = useState("doador"); // Estado para o tipo de usuário
+  const [isSmoker, setIsSmoker] = useState(""); // Estado para a opção de fumante
+  const [bloodType, setBloodType] = useState(""); // Estado para o tipo sanguíneo
+  const [donationOrgans, setDonationOrgans] = useState([]); // Estado para os órgãos a serem doados
+  const [hasAllergies, setHasAllergies] = useState(""); // Estado para alergias
+  const [familyHistory, setFamilyHistory] = useState(""); // Estado para histórico familiar
+  const [waitingOrgans, setWaitingOrgans] = useState(""); // Estado para o órgão que está aguardando (receptor)
 
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
+  };
+
+  const handleDonationOrgansChange = (event) => {
+    setDonationOrgans(event.target.value);
+  };
+
+  const handleWaitingOrgansChange = (event) => {
+    setWaitingOrgans(event.target.value);
   };
 
   return (
@@ -71,6 +90,171 @@ function Cover() {
                 <FormControlLabel value="receptor" control={<Radio />} label="Receptor" />
               </RadioGroup>
             </MDBox>
+
+            {/* Exibindo o formulário do doador quando o tipo de usuário for doador */}
+            {userType === "doador" && (
+              <>
+                <MDBox mb={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>Tipo Sanguíneo</InputLabel>
+                    <Select
+                      value={bloodType}
+                      onChange={(e) => setBloodType(e.target.value)}
+                      label="Tipo Sanguíneo"
+                    >
+                      <MenuItem value="A+">A+</MenuItem>
+                      <MenuItem value="A-">A-</MenuItem>
+                      <MenuItem value="B+">B+</MenuItem>
+                      <MenuItem value="B-">B-</MenuItem>
+                      <MenuItem value="AB+">AB+</MenuItem>
+                      <MenuItem value="AB-">AB-</MenuItem>
+                      <MenuItem value="O+">O+</MenuItem>
+                      <MenuItem value="O-">O-</MenuItem>
+                    </Select>
+                  </FormControl>
+                </MDBox>
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" mb={1}>
+                    Órgãos que você tem intenção de doar:
+                  </MDTypography>
+                  <Select
+                    multiple
+                    value={donationOrgans}
+                    onChange={handleDonationOrgansChange}
+                    fullWidth
+                    renderValue={(selected) => selected.join(", ")}
+                  >
+                    <MenuItem value="coração">Coração</MenuItem>
+                    <MenuItem value="rins">Rins</MenuItem>
+                    <MenuItem value="fígado">Fígado</MenuItem>
+                    <MenuItem value="pulmões">Pulmões</MenuItem>
+                    <MenuItem value="pâncreas">Pâncreas</MenuItem>
+                    <MenuItem value="córneas">Córneas</MenuItem>
+                  </Select>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" mb={1}>
+                    Você tem alergias?
+                  </MDTypography>
+                  <RadioGroup
+                    value={hasAllergies}
+                    onChange={(e) => setHasAllergies(e.target.value)}
+                    row
+                  >
+                    <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                    <FormControlLabel value="nao" control={<Radio />} label="Não" />
+                  </RadioGroup>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" mb={1}>
+                    Histórico Familiar:
+                  </MDTypography>
+                  <RadioGroup
+                    value={familyHistory}
+                    onChange={(e) => setFamilyHistory(e.target.value)}
+                    row
+                  >
+                    <FormControlLabel
+                      value="sem"
+                      control={<Radio />}
+                      label="Sem histórico de doenças"
+                    />
+                    <FormControlLabel
+                      value="com"
+                      control={<Radio />}
+                      label="Com histórico de doenças"
+                    />
+                  </RadioGroup>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDInput type="date" label="Data de Nascimento" variant="standard" fullWidth />
+                </MDBox>
+                <MDBox mb={2}>
+                  <MDInput
+                    type="text"
+                    label="CPF"
+                    variant="standard"
+                    fullWidth
+                    inputProps={{ maxLength: 11 }} // Limitando o CPF a 11 caracteres
+                  />
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" mb={1}>
+                    Você é fumante?
+                  </MDTypography>
+                  <RadioGroup value={isSmoker} onChange={(e) => setIsSmoker(e.target.value)} row>
+                    <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                    <FormControlLabel value="nao" control={<Radio />} label="Não" />
+                  </RadioGroup>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" mb={1}>
+                    Você consome álcool?
+                  </MDTypography>
+                  <RadioGroup value={isSmoker} onChange={(e) => setIsSmoker(e.target.value)} row>
+                    <FormControlLabel value="sim" control={<Radio />} label="Sim" />
+                    <FormControlLabel value="nao" control={<Radio />} label="Não" />
+                  </RadioGroup>
+                </MDBox>
+              </>
+            )}
+
+            {/* Exibindo o formulário do receptor quando o tipo de usuário for receptor */}
+            {userType === "receptor" && (
+              <>
+                <MDBox mb={2}>
+                  <FormControl fullWidth>
+                    <InputLabel>Tipo Sanguíneo</InputLabel>
+                    <Select
+                      value={bloodType}
+                      onChange={(e) => setBloodType(e.target.value)}
+                      label="Tipo Sanguíneo"
+                    >
+                      <MenuItem value="A+">A+</MenuItem>
+                      <MenuItem value="A-">A-</MenuItem>
+                      <MenuItem value="B+">B+</MenuItem>
+                      <MenuItem value="B-">B-</MenuItem>
+                      <MenuItem value="AB+">AB+</MenuItem>
+                      <MenuItem value="AB-">AB-</MenuItem>
+                      <MenuItem value="O+">O+</MenuItem>
+                      <MenuItem value="O-">O-</MenuItem>
+                    </Select>
+                  </FormControl>
+                </MDBox>
+                <MDBox mb={2}>
+                  <MDTypography variant="body2" color="text" mb={1}>
+                    Órgão que você está aguardando:
+                  </MDTypography>
+                  <Select value={waitingOrgans} onChange={handleWaitingOrgansChange} fullWidth>
+                    <MenuItem value="coração">Coração</MenuItem>
+                    <MenuItem value="rins">Rins</MenuItem>
+                    <MenuItem value="fígado">Fígado</MenuItem>
+                    <MenuItem value="pulmões">Pulmões</MenuItem>
+                    <MenuItem value="pâncreas">Pâncreas</MenuItem>
+                    <MenuItem value="córneas">Córneas</MenuItem>
+                  </Select>
+                </MDBox>
+
+                <MDBox mb={2}>
+                  <MDInput type="date" label="Data de Nascimento" variant="standard" fullWidth />
+                </MDBox>
+                <MDBox mb={2}>
+                  <MDInput
+                    type="text"
+                    label="CPF"
+                    variant="standard"
+                    fullWidth
+                    inputProps={{ maxLength: 11 }} // Limitando o CPF a 11 caracteres
+                  />
+                </MDBox>
+              </>
+            )}
+
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
               <MDTypography
