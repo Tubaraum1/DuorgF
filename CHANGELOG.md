@@ -128,7 +128,7 @@
   - DashboardLayout
   - PageLayout
 - Lists
-  - ProfilesList
+  - ProfilesList-
 - Navbars
   - DashboardNavbar
   - DefaultNavbar
