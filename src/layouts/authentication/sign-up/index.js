@@ -20,6 +20,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
@@ -35,6 +37,8 @@ function Cover() {
   const [hasAllergies, setHasAllergies] = useState(""); // Estado para alergias
   const [familyHistory, setFamilyHistory] = useState(""); // Estado para histórico familiar
   const [waitingOrgans, setWaitingOrgans] = useState(""); // Estado para o órgão que está aguardando (receptor)
+  const [isTermsChecked, setIsTermsChecked] = useState(false); // Estado para o checkbox de termos de serviço
+  const [errorMessage, setErrorMessage] = useState(false); // Estado para mostrar a mensagem de erro
 
   const handleUserTypeChange = (event) => {
     setUserType(event.target.value);
@@ -46,6 +50,18 @@ function Cover() {
 
   const handleWaitingOrgansChange = (event) => {
     setWaitingOrgans(event.target.value);
+  };
+
+  const handleTermsChange = (event) => {
+    setIsTermsChecked(event.target.checked);
+  };
+
+  const handleSubmit = () => {
+    if (!isTermsChecked) {
+      setErrorMessage(true);
+      return;
+    }
+    // Continue com o processo de cadastro
   };
 
   return (
@@ -81,7 +97,6 @@ function Cover() {
               <MDInput type="password" label="Senha" variant="standard" fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              {/* Adicionando a opção para o tipo de usuário (Doador ou Receptor) */}
               <MDTypography variant="body2" color="text" mb={1}>
                 Você é um:
               </MDTypography>
@@ -91,7 +106,6 @@ function Cover() {
               </RadioGroup>
             </MDBox>
 
-            {/* Exibindo o formulário do doador quando o tipo de usuário for doador */}
             {userType === "doador" && (
               <>
                 <MDBox mb={2}>
@@ -132,7 +146,6 @@ function Cover() {
                     <MenuItem value="córneas">Córneas</MenuItem>
                   </Select>
                 </MDBox>
-
                 <MDBox mb={2}>
                   <MDTypography variant="body2" color="text" mb={1}>
                     Você tem alergias?
@@ -181,30 +194,9 @@ function Cover() {
                     inputProps={{ maxLength: 11 }} // Limitando o CPF a 11 caracteres
                   />
                 </MDBox>
-
-                <MDBox mb={2}>
-                  <MDTypography variant="body2" color="text" mb={1}>
-                    Você é fumante?
-                  </MDTypography>
-                  <RadioGroup value={isSmoker} onChange={(e) => setIsSmoker(e.target.value)} row>
-                    <FormControlLabel value="sim" control={<Radio />} label="Sim" />
-                    <FormControlLabel value="nao" control={<Radio />} label="Não" />
-                  </RadioGroup>
-                </MDBox>
-
-                <MDBox mb={2}>
-                  <MDTypography variant="body2" color="text" mb={1}>
-                    Você consome álcool?
-                  </MDTypography>
-                  <RadioGroup value={isSmoker} onChange={(e) => setIsSmoker(e.target.value)} row>
-                    <FormControlLabel value="sim" control={<Radio />} label="Sim" />
-                    <FormControlLabel value="nao" control={<Radio />} label="Não" />
-                  </RadioGroup>
-                </MDBox>
               </>
             )}
 
-            {/* Exibindo o formulário do receptor quando o tipo de usuário for receptor */}
             {userType === "receptor" && (
               <>
                 <MDBox mb={2}>
@@ -236,66 +228,32 @@ function Cover() {
                     <MenuItem value="fígado">Fígado</MenuItem>
                     <MenuItem value="pulmões">Pulmões</MenuItem>
                     <MenuItem value="pâncreas">Pâncreas</MenuItem>
-                    <MenuItem value="córneas">Córneas</MenuItem>
                   </Select>
-                </MDBox>
-
-                <MDBox mb={2}>
-                  <MDInput type="date" label="Data de Nascimento" variant="standard" fullWidth />
-                </MDBox>
-                <MDBox mb={2}>
-                  <MDInput
-                    type="text"
-                    label="CPF"
-                    variant="standard"
-                    fullWidth
-                    inputProps={{ maxLength: 11 }} // Limitando o CPF a 11 caracteres
-                  />
                 </MDBox>
               </>
             )}
 
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Concordo com os &nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Termos e condições
-              </MDTypography>
+            <MDBox mb={2}>
+              <FormControlLabel
+                control={<Checkbox checked={isTermsChecked} onChange={handleTermsChange} />}
+                label="Eu concordo com os Termos de Serviço"
+              />
             </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+
+            <MDBox mt={4} mb={2}>
+              <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                 Cadastrar
               </MDButton>
             </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Já possui cadastro?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-in"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Entrar
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
+            <Snackbar
+              open={errorMessage}
+              autoHideDuration={4000}
+              onClose={() => setErrorMessage(false)}
+            >
+              <Alert onClose={() => setErrorMessage(false)} severity="error" sx={{ width: "100%" }}>
+                Erro ao cadastrar! Por favor, marque a opção de concordar com os termos de serviço.
+              </Alert>
+            </Snackbar>
           </MDBox>
         </MDBox>
       </Card>
